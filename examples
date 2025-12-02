@@ -1,0 +1,48 @@
+import numpy as np
+from sklearn.linear_model import LinearRegression, LogisticRegression, Ridge, Lasso
+from sklearn.preprocessing import PolynomialFeatures
+
+print("========== 1. Linear Regression ==========")
+X = np.array([[1], [2], [3], [4], [5]])
+y = np.array([10, 20, 30, 40, 50])
+
+lin_model = LinearRegression()
+lin_model.fit(X, y)
+print("Weight (w):", lin_model.coef_)
+print("Bias (b):", lin_model.intercept_)
+print("Prediction for 6:", lin_model.predict([[6]]), "\n")
+
+print("========== 2. Logistic Regression ==========")
+# Simple binary example: Pass if hours >= 3
+X_log = np.array([[1], [2], [3], [4], [5]])
+y_log = np.array([0, 0, 1, 1, 1])
+
+log_model = LogisticRegression()
+log_model.fit(X_log, y_log)
+print("Weight (w):", log_model.coef_)
+print("Bias (b):", log_model.intercept_)
+print("Prediction for 4:", log_model.predict([[4]]))
+print("Prediction probability for 4:", log_model.predict_proba([[4]]), "\n")
+
+print("========== 3. Polynomial Regression ==========")
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(X)
+poly_model = LinearRegression()
+poly_model.fit(X_poly, y)
+print("Polynomial weights:", poly_model.coef_)
+print("Polynomial bias:", poly_model.intercept_)
+print("Prediction for 6:", poly_model.predict(poly.fit_transform([[6]])), "\n")
+
+print("========== 4. Ridge Regression ==========")
+ridge_model = Ridge(alpha=1.0)
+ridge_model.fit(X, y)
+print("Ridge weight (w):", ridge_model.coef_)
+print("Ridge bias (b):", ridge_model.intercept_)
+print("Prediction for 6:", ridge_model.predict([[6]]), "\n")
+
+print("========== 5. Lasso Regression ==========")
+lasso_model = Lasso(alpha=0.1)
+lasso_model.fit(X, y)
+print("Lasso weight (w):", lasso_model.coef_)
+print("Lasso bias (b):", lasso_model.intercept_)
+print("Prediction for 6:", lasso_model.predict([[6]]))
